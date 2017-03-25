@@ -143,10 +143,17 @@ export class Tabs2 extends AbstractComponent<ITabs2Props, ITabs2State> {
         this.moveSelectionIndicator();
     }
 
-    public componentWillReceiveProps({ selectedTabId }: ITabs2Props) {
+    public componentWillReceiveProps({ id, defaultSelectedTabId, selectedTabId }: ITabs2Props) {
         if (selectedTabId !== undefined) {
             // keep state in sync with controlled prop, so state is canonical source of truth
             this.setState({ selectedTabId });
+            return;
+        }
+        
+        // check if id of component has changed
+        if (defaultSelectedTabId !== undefined && id != this.props.id){
+            // set selected Tab to default selection as component id has changed
+            this.setState({ selectedTabId : defaultSelectedTabId });
         }
     }
 
